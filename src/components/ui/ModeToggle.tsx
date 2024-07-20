@@ -26,7 +26,7 @@ export function ModeToggle({ setMode }: ModeToggleProps) {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" sideOffset={22}>
         <DropdownMenuItem
           onClick={() => {
             setTheme("light");
@@ -43,9 +43,7 @@ export function ModeToggle({ setMode }: ModeToggleProps) {
         >
           Dark
         </DropdownMenuItem>
-        {/* <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem> */}
+      
       </DropdownMenuContent>
     </DropdownMenu>
   );

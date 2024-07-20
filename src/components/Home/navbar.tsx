@@ -5,15 +5,17 @@ import { ModeToggle } from "../ui/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
+import { SignIn, UserButton, useUser } from "@clerk/nextjs";
 
-export default function Component() {
+const Navbar = () => {
   const anicontainer = useRef<HTMLDivElement>(null);
+  const { isSignedIn } = useUser();
 
   const [mode, setMode] = useState("light");
 
   useEffect(() => {
     console.log(mode);
-    
+
     if (anicontainer.current) {
       const animationInstance = lottie.loadAnimation({
         container: anicontainer.current,
@@ -36,18 +38,27 @@ export default function Component() {
         <div className="h-10 w-10 text-white" ref={anicontainer}></div>
       </aside>
 
-      <aside className="flex items-center gap-2">
-        <Link
-          href="/dashboard"
-          className="relative inline-flex h-10 overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-        >
-          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-            {"Get Started"}
-          </span>
-        </Link>
+      <aside className="flex items-center gap-5">
+        <UserButton />
+        {!isSignedIn && (
+          <Link
+            href="/sign-in"
+            className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200"
+          >
+            {"Login"}
+          </Link>
+        )}
+        {isSignedIn && (
+          <Link
+            href="/uploads"
+            className="px-4 py-2 rounded-md border border-black bg-white text-black text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200"
+          >
+            {"Get started"}
+          </Link>
+        )}
         <ModeToggle setMode={setMode} />
       </aside>
     </header>
   );
-}
+};
+export default Navbar;

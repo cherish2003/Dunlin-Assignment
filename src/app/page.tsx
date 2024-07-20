@@ -24,7 +24,7 @@ export default function Home() {
             }
           >
             <Image
-              src={`/img2.png`}
+              src={`/img3.png`}
               alt="hero"
               height={720}
               width={1400}
