@@ -10,6 +10,8 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { AnalysisProvider } from "@/Providers/analystics-provider";
+import { NavigationProvider } from "@/Providers/NavigationProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,20 +26,22 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <AnalysisProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </AnalysisProvider>
-        </body>
-      </html>
+      <NavigationProvider>
+        <html lang="en">
+          <body className={inter.className}>
+            <AnalysisProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </AnalysisProvider>
+          </body>
+        </html>
+      </NavigationProvider>
     </ClerkProvider>
   );
 }

@@ -10,8 +10,9 @@ import { SignIn, UserButton, useUser } from "@clerk/nextjs";
 const Navbar = () => {
   const anicontainer = useRef<HTMLDivElement>(null);
   const { isSignedIn } = useUser();
+  const storedMode = localStorage.getItem("theme");
 
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState(storedMode);
 
   useEffect(() => {
     console.log(mode);
@@ -22,7 +23,7 @@ const Navbar = () => {
         renderer: "svg",
         loop: false,
         autoplay: true,
-        path: `${mode == "light" ? "/Ani3.json " : "/Ani3white.json  "}`,
+        path: `${mode === "light" ? "/Ani3.json" : "/Ani3white.json"}`,
       });
 
       return () => {

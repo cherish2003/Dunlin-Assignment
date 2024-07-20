@@ -5,11 +5,11 @@ import { useState } from "react";
 type Props = {};
 
 import {
-  ShoppingCart,
-  LayoutDashboard,
+  LineChart,
+  LayoutPanelLeft,
   UploadIcon,
-  Settings,
   ChevronRight,
+  Folder
 } from "lucide-react";
 import { Button } from "../ui/button";
 
@@ -51,8 +51,14 @@ export default function Sidebar({}: Props) {
           {
             title: "Analytics",
             href: "/analytics",
-            icon: LayoutDashboard,
-            variant: "default",
+            icon: LineChart,
+            variant: "ghost",
+          },
+          {
+            title: "Files",
+            href: "/files",
+            icon: Folder,
+            variant: "ghost",
           },
         ]}
       />

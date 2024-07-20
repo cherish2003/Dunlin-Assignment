@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import { CardContent } from "../Card";
 import { TemperatureSelector } from "../ui/TemparatureSelector";
@@ -17,6 +17,10 @@ const Summary = ({ text }: any) => {
   const [maxLength, setMaxLength] = useState(120);
   const [summaryText, setSummaryText] = useState(text);
   const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    setSummaryText(text);
+  }, [text]);
 
   const handleSummarizeAgain = async () => {
     setReverse((prev) => !prev);
@@ -64,7 +68,6 @@ const Summary = ({ text }: any) => {
         <div className="mt-5 h-full overflow-scroll no-scrollbar">
           <AnimText text={summaryText} delay={2} reverse={reverse} key={key} />
         </div>
-      
       </div>
 
       <CardContent>

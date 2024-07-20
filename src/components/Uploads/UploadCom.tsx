@@ -7,8 +7,11 @@ import { Button } from "../ui/button";
 import { motion } from "framer-motion";
 import AnimatedTextCharacter from "../global/animatedtextchar";
 import { FlipWords } from "../ui/filp-words";
+import { useNavigation } from "@/Providers/NavigationProvider";
 
 const UploadCom = () => {
+  const { navigate } = useNavigation();
+
   const anicontainer1 = useRef<HTMLDivElement>(null);
   const anicontainer2 = useRef<HTMLDivElement>(null);
   const anicontainer3 = useRef<HTMLDivElement>(null);
@@ -88,6 +91,8 @@ const UploadCom = () => {
         autoplay: true,
         path: "/Done.json",
       });
+
+      animationInstance5.addEventListener("complete", handleAnimationComplete);
     }
 
     return () => {
@@ -98,6 +103,10 @@ const UploadCom = () => {
       if (animationInstance5) animationInstance5.destroy();
     };
   }, [animationStep]);
+
+  const handleAnimationComplete = () => {
+    navigate("/analytics");
+  };
   const handleUploadClick = () => {
     setIsUploading(true);
     setAnimationStep(0);
@@ -105,13 +114,13 @@ const UploadCom = () => {
 
   return (
     <>
-      <div className="min-h-screen w-full  bg-neutral-300 dark:bg-neutral-800 text-black flex flex-col justify-center items-center">
+      <div className="min-h-screen w-full dark:bg-neutral-900 text-black flex flex-col justify-center items-center">
         {!isUploading && (
           <>
-            <div className="text-3xl font-bold text-center mb-10">
+            <div className="p-3 text-3xl font-bold text-center mb-10 dark:text-white">
               Upload your
               <FlipWords words={words} /> <br />
-              We got you covered 🤫
+              We got you covered 🙂
             </div>
             <UploadFile
               setFile={setFile}
@@ -137,7 +146,7 @@ const UploadCom = () => {
             className="flex flex-col justify-center items-center"
           >
             <motion.div
-              className="h-60 w-60"
+              className="h-28 w-28 sm:h-40 sm:w-40 md:h-60 md:w-60"
               ref={anicontainer1}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -167,7 +176,7 @@ const UploadCom = () => {
             className="flex flex-col justify-center items-center"
           >
             <motion.div
-              className="h-60 w-60"
+              className="h-28 w-28 sm:h-40 sm:w-40 md:h-60 md:w-60"
               ref={anicontainer2}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -196,7 +205,7 @@ const UploadCom = () => {
             className="flex flex-col justify-center items-center"
           >
             <motion.div
-              className="h-60 w-60"
+              className="h-28 w-28 sm:h-40 sm:w-40 md:h-60 md:w-60"
               ref={anicontainer3}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -225,7 +234,7 @@ const UploadCom = () => {
             className="flex flex-col justify-center items-center"
           >
             <motion.div
-              className="h-60 w-60"
+              className="h-28 w-28 sm:h-40 sm:w-40 md:h-60 md:w-60"
               ref={anicontainer4}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -254,7 +263,7 @@ const UploadCom = () => {
             className="flex flex-col justify-center items-center"
           >
             <motion.div
-              className="h-60 w-60"
+              className="h-28 w-28 sm:h-40 sm:w-40 md:h-60 md:w-60"
               ref={anicontainer5}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}

@@ -42,9 +42,7 @@ export function MaxLengthSelector({ defaultValue, setMaxLength }: any) {
           className="w-[260px] text-sm"
           side="left"
         >
-          The maximum number of tokens to generate. Requests can use up to 2,048
-          or 4,000 tokens, shared between prompt and completion. The exact limit
-          varies by model.
+          The total number of words in summarized text
         </HoverCardContent>
       </HoverCard>
     </div>

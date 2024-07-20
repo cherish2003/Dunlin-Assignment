@@ -16,10 +16,11 @@ export default function UploadFile({
   handleUploadClick,
   isUploading,
 }: any) {
-  const { setAnalysisData }: any = useContext(AnalysisContext);
+  const { uploadAnalysisData }: any = useContext(AnalysisContext);
   const { getToken } = useAuth();
 
   const [dragging, setDragging] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleDragEnter = (e: any) => {
     e.preventDefault();
@@ -44,13 +45,17 @@ export default function UploadFile({
     e.stopPropagation();
     setDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      setFile(e.dataTransfer.files[0]);
+      const newFile = e.dataTransfer.files[0];
+      setFile(newFile);
+      handleUpload(newFile);
       e.dataTransfer.clearData();
     }
   };
 
   const handleFileChange = (e: any) => {
-    setFile(e.target.files[0]);
+    const newFile = e.target.files[0];
+    setFile(newFile);
+    handleUpload(newFile);
   };
 
   const handleClick = () => {
@@ -60,44 +65,45 @@ export default function UploadFile({
     }
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (file: File) => {
     const token = await getToken();
     handleUploadClick();
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
+    setLoading(true); // Set loading to true when starting upload
+    const formData = new FormData();
+    formData.append("file", file);
 
-      try {
-        const response = await axios.post(
-          "http://localhost:3001/api/upload",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        console.log(response);
-
-        if (response.status === 200) {
-          const result = response.data;
-          setAnalysisData(result);
-          console.log("Analysis Result:", result);
-        } else {
-          console.error("Error uploading file");
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         }
-      } catch (error) {
-        console.error("Error uploading file", error);
+      );
+
+      console.log(response);
+
+      if (response.status === 200) {
+        const result = response.data;
+        console.log("Analysis Result:", result);
+        uploadAnalysisData(result?.fileName, result?.analtics);
+      } else {
+        console.error("Error uploading file");
       }
+    } catch (error) {
+      console.error("Error uploading file", error);
+    } finally {
+      setLoading(false); 
     }
   };
 
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        {!isUploading && (
+        {!isUploading && !loading && (
           <div
             className={`border-2 border-dashed border-gray-200 rounded-lg flex flex-col gap-1 p-6 items-center ${
               dragging ? "border-gray-700 bg-gray-50" : ""
@@ -124,15 +130,35 @@ export default function UploadFile({
             />
           </div>
         )}
-        {file && (
+        {file && !loading && (
           <div className="text-sm text-gray-700 mt-2">
             Selected file: {file.name}
           </div>
         )}
+        {loading && (
+          <div className="flex justify-center items-center mt-4">
+            <svg
+              className="w-6 h-6 animate-spin text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 4V2m0 20v-2m10-10h2M4 12H2m15.3-7.7l1.4-1.4m-1.4 19.4l-1.4-1.4m-10.6-1.4l-1.4 1.4m1.4-19.4l-1.4 1.4" />
+            </svg>
+          </div>
+        )}
       </CardContent>
-      {file && (
+      {file && !loading && (
         <CardFooter className="flex justify-center items-center">
-          <Button size="lg" variant="outline" onClick={handleUpload}>
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => handleUpload(file)}
+          >
             Upload
           </Button>
         </CardFooter>

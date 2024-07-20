@@ -8,7 +8,7 @@ const Uploads = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen w-full text-black flex   dark:bg-neutral-800">
+      <div className="min-h-screen w-full text-black flex   dark:bg-neutral-900">
         <Sidebar />
         <UploadCom />
       </div>
