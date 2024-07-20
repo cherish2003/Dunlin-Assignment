@@ -1,4 +1,4 @@
-# File Analysis Upload Tool
+# Insightify
 
 This project is a web-based application that allows users to upload various file types (text, PDF, DOC, HTML) for analysis. The application provides detailed insights such as classification, entity recognition, sentiment analysis, and syntax analysis.
 
@@ -13,7 +13,7 @@ This project is a web-based application that allows users to upload various file
 - [License](#license)
 
 ## Features
-
+- User friendly UI 
 - Drag and drop or select files for upload.
 - Perform classification, entity recognition, sentiment analysis, and syntax analysis on uploaded files.
 - View analysis results in a user-friendly interface.
@@ -29,6 +29,11 @@ This project is a web-based application that allows users to upload various file
 - Clerk (for authentication)
 - Tailwind CSS (for styling)
 - Express ( Backend )
+  
+## Demo
+https://github.com/user-attachments/assets/9eea17a4-60fa-4089-9a10-031399f67d09
+
+
 ## Installation
 
 1. Clone the repository:
